@@ -64,12 +64,13 @@ func InsertOrUpdateFile(file *model.File, reader io.Reader) error {
 		return err
 	}
 
-	localInfoFile.FileList[file.Key] = *file
-	if err := WriteToInfoFile(); err != nil {
-		return err
-	}
 	glog.Infoln("move", fs.Name(), "to", path.Join(conf.Conf.WorkSpace.Path, file.Key))
 	if err := os.Rename(fs.Name(), path.Join(conf.Conf.WorkSpace.Path, file.Key)); err != nil {
+		return err
+	}
+
+	localInfoFile.FileList[file.Key] = *file
+	if err := WriteToInfoFile(); err != nil {
 		return err
 	}
 
