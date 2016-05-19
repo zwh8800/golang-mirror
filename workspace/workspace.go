@@ -55,7 +55,7 @@ func IsFileDirty(file *model.File) bool {
 }
 
 func InsertOrUpdateFile(file *model.File, reader io.Reader) error {
-	fs, err := ioutil.TempFile("", "")
+	fs, err := ioutil.TempFile(conf.Conf.WorkSpace.Path, "")
 	if err != nil {
 		return err
 	}
