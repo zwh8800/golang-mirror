@@ -63,6 +63,9 @@ func InsertOrUpdateFile(file *model.File, reader io.Reader) error {
 	if _, err := io.Copy(fs, reader); err != nil {
 		return err
 	}
+	if err := fs.Chmod(0644); err != nil {
+		return err
+	}
 
 	glog.Infoln("move", fs.Name(), "to", path.Join(conf.Conf.WorkSpace.Path, file.Key))
 	if err := os.Rename(fs.Name(), path.Join(conf.Conf.WorkSpace.Path, file.Key)); err != nil {
