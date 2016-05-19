@@ -1,0 +1,12 @@
+hash: 492d8b38ea752298970566b9d51b86f08b99547a9e1ba2ff069046843d40d747
+updated: 2016-05-19T14:07:32.182889893+08:00
+imports:
+- name: github.com/golang/glog
+  version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
+- name: gopkg.in/gcfg.v1
+  version: 083575c3955c85df16fe9590cceab64d03f5eb6e
+  subpackages:
+  - scanner
+  - token
+  - types
+devImports: []

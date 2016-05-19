@@ -1,0 +1,4 @@
+package: github.com/zwh8800/golang-mirror
+import:
+- package: github.com/golang/glog
+- package: gopkg.in/gcfg.v1
