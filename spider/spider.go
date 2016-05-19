@@ -24,7 +24,7 @@ func updateFile(file *model.File) error {
 	if err != nil {
 		return err
 	}
-	u.RawPath = path.Join(u.RawPath, file.Key)
+	u.Path = path.Join(u.Path, file.Key)
 
 	resp, err := http.Get(u.String())
 	if err != nil {
