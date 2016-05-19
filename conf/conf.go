@@ -3,6 +3,7 @@ package conf
 import (
 	"flag"
 	"path/filepath"
+	"time"
 
 	"github.com/golang/glog"
 	"gopkg.in/gcfg.v1"
@@ -11,6 +12,7 @@ import (
 type config struct {
 	Golang struct {
 		IndexPage string
+		Earliest  time.Time
 	}
 	WeixinPush struct {
 		Url string

@@ -62,11 +62,14 @@ func IsFileDirty(file *model.File) bool {
 }
 
 func InsertOrUpdateFile(file *model.File, reader io.Reader) error {
-	fs, err := ioutil.TempFile(conf.Conf.WorkSpace.Path, "")
+	fs, err := ioutil.TempFile(path.Join(conf.Conf.WorkSpace.Path, "cache"), "")
 	if err != nil {
 		return err
 	}
 	defer fs.Close()
+	defer func() {
+		os.Remove(fs.Name())
+	}()
 	if _, err := io.Copy(fs, reader); err != nil {
 		return err
 	}
