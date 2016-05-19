@@ -53,14 +53,16 @@ func spiderIndex() error {
 		return err
 	}
 	for _, file := range index.FileList {
-		if workspace.IsFileDirty(&file) {
-			glog.Infoln("file", file.Key, "dirty, updating")
-			if err := updateFile(&file); err != nil {
-				glog.Errorln(err)
+		go func() {
+			if workspace.IsFileDirty(&file) {
+				glog.Infoln("file", file.Key, "dirty, updating")
+				if err := updateFile(&file); err != nil {
+					glog.Errorln(err)
+				}
+			} else {
+				glog.Infoln("file", file.Key, "not modified")
 			}
-		} else {
-			glog.Infoln("file", file.Key, "not modified")
-		}
+		}()
 	}
 
 	return nil

@@ -6,8 +6,10 @@ import (
 	"io/ioutil"
 	"os"
 	"path"
+	"sync"
 
 	"github.com/golang/glog"
+
 	"github.com/zwh8800/golang-mirror/conf"
 	"github.com/zwh8800/golang-mirror/model"
 )
@@ -19,6 +21,7 @@ type infoFile struct {
 var localInfoFile = infoFile{
 	make(map[string]model.File),
 }
+var localInfoFileLock sync.RWMutex
 
 func init() {
 	infoFilePath := path.Join(conf.Conf.WorkSpace.Path, "info.json")
@@ -42,6 +45,10 @@ func init() {
 }
 
 func IsFileDirty(file *model.File) bool {
+	localInfoFileLock.RLock()
+	defer func() {
+		localInfoFileLock.RUnlock()
+	}()
 	if localFile, ok := localInfoFile.FileList[file.Key]; ok {
 		if file.LastModified != localFile.LastModified ||
 			file.ETag != localFile.ETag {
@@ -72,6 +79,10 @@ func InsertOrUpdateFile(file *model.File, reader io.Reader) error {
 		return err
 	}
 
+	localInfoFileLock.Lock()
+	defer func() {
+		localInfoFileLock.Unlock()
+	}()
 	localInfoFile.FileList[file.Key] = *file
 	if err := WriteToInfoFile(); err != nil {
 		return err
