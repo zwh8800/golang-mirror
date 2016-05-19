@@ -15,4 +15,4 @@ VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/log
 VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/config
 VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/ws
 
-CMD ["./golang-mirror", "-log_dir", "log", "-config", "config/golang-mirror.gcfg"]
+CMD ["./golang-mirror", "-log_dir", "log", "-alsologtostderr", "-config", "config/golang-mirror.gcfg"]
