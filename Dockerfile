@@ -5,7 +5,8 @@ WORKDIR $GOPATH/src/github.com/zwh8800/golang-mirror
 
 RUN apk update && apk add ca-certificates && apk add git && \
     apk add tzdata && ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime && \
-    echo "Asia/Shanghai" > /etc/timezone && go get github.com/Masterminds/glide
+    echo "Asia/Shanghai" > /etc/timezone && go get github.com/Masterminds/glide && \
+    go get github.com/shadowsocks/shadowsocks-go/cmd/shadowsocks-local
 
 ADD . $GOPATH/src/github.com/zwh8800/golang-mirror/
 
