@@ -58,7 +58,7 @@ func spiderIndex() error {
 				if workspace.IsFileDirty(&file) {
 					glog.Infoln("file", file.Key, "dirty, updating")
 					if err := updateFile(&file); err != nil {
-						glog.Errorln(err)
+						glog.Errorln("error when updating", file.Key, ":", err)
 					}
 				} else {
 					glog.Infoln("file", file.Key, "not modified")
