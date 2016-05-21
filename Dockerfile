@@ -16,4 +16,4 @@ VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/log
 VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/config
 VOLUME $GOPATH/src/github.com/zwh8800/golang-mirror/ws
 
-CMD ["env", "http_proxy=http://localhost:8123", "https_proxy=http://localhost:8123", "./golang-mirror", "-log_dir", "log", "-alsologtostderr", "-config", "config/golang-mirror.gcfg"]
+CMD ["env", "http_proxy=http://192.168.0.1:8123", "https_proxy=http://192.168.0.1:8123", "./golang-mirror", "-log_dir", "log", "-alsologtostderr", "-config", "config/golang-mirror.gcfg"]
