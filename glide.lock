@@ -1,5 +1,5 @@
-hash: 492d8b38ea752298970566b9d51b86f08b99547a9e1ba2ff069046843d40d747
-updated: 2016-05-19T17:22:07.976548861+08:00
+hash: d4054532d45389bbd81ac2a825be55257b4fa5f47eea2723a41c261b706f37f6
+updated: 2016-05-27T22:46:09.321523792+08:00
 imports:
 - name: github.com/golang/glog
   version: 23def4e6c14b4da8ac2ed8007337bc5eb5007998
@@ -11,4 +11,6 @@ imports:
   - scanner
   - token
   - types
+- name: gopkg.in/go-playground/pool.v1
+  version: 7f37f4c92e71475945ec7c4ed4b07a34bb7c1966
 devImports: []

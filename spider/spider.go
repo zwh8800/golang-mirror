@@ -13,10 +13,11 @@ import (
 	"github.com/zwh8800/golang-mirror/conf"
 	"github.com/zwh8800/golang-mirror/model"
 	"github.com/zwh8800/golang-mirror/workspace"
+	"gopkg.in/go-playground/pool.v1"
 )
 
 type golangIndex struct {
-	FileList []model.File `xml:"Contents"`
+	FileList []*model.File `xml:"Contents"`
 }
 
 func updateFile(file *model.File) error {
@@ -52,18 +53,28 @@ func spiderIndex() error {
 	if err := xml.Unmarshal(data, &index); err != nil {
 		return err
 	}
+	p := pool.NewPool(4, 100)
+
 	for _, file := range index.FileList {
 		if file.LastModified.After(conf.Conf.Golang.Earliest) {
-			go func(file model.File) {
-				if workspace.IsFileDirty(&file) {
+			p.Queue(func(job *pool.Job) {
+				file := job.Params()[0].(*model.File)
+				if workspace.IsFileDirty(file) {
 					glog.Infoln("file", file.Key, "dirty, updating")
-					if err := updateFile(&file); err != nil {
+					if err := updateFile(file); err != nil {
 						glog.Errorln("error when updating", file.Key, ":", err)
 					}
 				} else {
 					glog.Infoln("file", file.Key, "not modified")
 				}
-			}(file)
+			}, file)
+		}
+	}
+	for result := range p.Results() {
+		err, ok := result.(*pool.ErrRecovery)
+		if ok {
+			glog.Errorln(err)
+			return err
 		}
 	}
 
