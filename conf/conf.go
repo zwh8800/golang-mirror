@@ -11,8 +11,9 @@ import (
 
 type config struct {
 	Golang struct {
-		IndexPage string
-		Earliest  time.Time
+		IndexPage         string
+		Earliest          time.Time
+		MaxDownloadThread int
 	}
 	WeixinPush struct {
 		Url string
