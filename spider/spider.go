@@ -9,11 +9,11 @@ import (
 	"runtime/debug"
 
 	"github.com/golang/glog"
+	"gopkg.in/go-playground/pool.v1"
 
 	"github.com/zwh8800/golang-mirror/conf"
 	"github.com/zwh8800/golang-mirror/model"
 	"github.com/zwh8800/golang-mirror/workspace"
-	"gopkg.in/go-playground/pool.v1"
 )
 
 type golangIndex struct {
