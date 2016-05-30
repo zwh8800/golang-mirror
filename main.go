@@ -22,6 +22,7 @@ func main() {
 	spider.Go()
 
 	handleSignal()
+	spider.WaitFinish()
 	glog.Infoln("gracefully shutdown")
 }
 

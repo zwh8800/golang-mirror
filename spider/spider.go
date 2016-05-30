@@ -7,6 +7,7 @@ import (
 	"net/url"
 	"path"
 	"runtime/debug"
+	"sync"
 
 	"github.com/golang/glog"
 	"gopkg.in/go-playground/pool.v1"
@@ -15,6 +16,8 @@ import (
 	"github.com/zwh8800/golang-mirror/model"
 	"github.com/zwh8800/golang-mirror/workspace"
 )
+
+var waitFinish sync.WaitGroup
 
 type golangIndex struct {
 	FileList []*model.File `xml:"Contents"`
@@ -82,6 +85,8 @@ func spiderIndex() error {
 }
 
 func Go() {
+	waitFinish.Add(1)
+	defer waitFinish.Done()
 	glog.Info("golang spider started")
 	defer func() {
 		if err := recover(); err != nil {
@@ -94,4 +99,8 @@ func Go() {
 	}
 
 	glog.Info("golang spider finished")
+}
+
+func WaitFinish() {
+	waitFinish.Wait()
 }
