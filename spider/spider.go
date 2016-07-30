@@ -56,7 +56,7 @@ func spiderIndex() error {
 	if err := xml.Unmarshal(data, &index); err != nil {
 		return err
 	}
-	p := pool.NewPool(conf.Conf.Golang.MaxDownloadThread, 1000)
+	p := pool.NewPool(conf.Conf.Golang.MaxDownloadThread, len(index.FileList))
 
 	for _, file := range index.FileList {
 		if file.LastModified.After(conf.Conf.Golang.Earliest) {
